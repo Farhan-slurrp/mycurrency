@@ -1,0 +1,78 @@
+[
+    {
+        "model": "currencies.currency",
+        "pk": 1,
+        "fields": {
+            "code": "EUR",
+            "name": "Euro",
+            "symbol": "€",
+            "is_active": true,
+            "created_at": "2026-02-11T00:00:00Z",
+            "updated_at": "2026-02-11T00:00:00Z"
+        }
+    },
+    {
+        "model": "currencies.currency",
+        "pk": 2,
+        "fields": {
+            "code": "USD",
+            "name": "US Dollar",
+            "symbol": "$",
+            "is_active": true,
+            "created_at": "2026-02-11T00:00:00Z",
+            "updated_at": "2026-02-11T00:00:00Z"
+        }
+    },
+    {
+        "model": "currencies.currency",
+        "pk": 3,
+        "fields": {
+            "code": "GBP",
+            "name": "British Pound",
+            "symbol": "£",
+            "is_active": true,
+            "created_at": "2026-02-11T00:00:00Z",
+            "updated_at": "2026-02-11T00:00:00Z"
+        }
+    },
+    {
+        "model": "currencies.currency",
+        "pk": 4,
+        "fields": {
+            "code": "CHF",
+            "name": "Swiss Franc",
+            "symbol": "CHF",
+            "is_active": true,
+            "created_at": "2026-02-11T00:00:00Z",
+            "updated_at": "2026-02-11T00:00:00Z"
+        }
+    },
+    {
+        "model": "providers.provider",
+        "pk": 1,
+        "fields": {
+            "name": "Mock Provider",
+            "adapter_path": "adapters.mock.MockAdapter",
+            "priority": 100,
+            "is_active": true,
+            "config": {
+                "volatility": 0.05
+            },
+            "created_at": "2026-02-11T00:00:00Z",
+            "updated_at": "2026-02-11T00:00:00Z"
+        }
+    },
+    {
+        "model": "providers.provider",
+        "pk": 2,
+        "fields": {
+            "name": "CurrencyBeacon",
+            "adapter_path": "adapters.currencybeacon.CurrencyBeaconAdapter",
+            "priority": 1,
+            "is_active": true,
+            "config": {},
+            "created_at": "2026-02-11T00:00:00Z",
+            "updated_at": "2026-02-11T00:00:00Z"
+        }
+    }
+]

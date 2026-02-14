@@ -1,0 +1,113 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<h1>Currency Converter</h1>
+
+<div style="max-width: 800px; margin: 20px 0;">
+    <form method="post" id="converter-form">
+        {% csrf_token %}
+        
+        <fieldset class="module aligned">
+            <h2>Convert Currency</h2>
+            
+            <div class="form-row">
+                <div>
+                    <label for="id_source_currency">{{ form.source_currency.label }}:</label>
+                    {{ form.source_currency }}
+                    {% if form.source_currency.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.source_currency.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="id_amount">{{ form.amount.label }}:</label>
+                    {{ form.amount }}
+                    {% if form.amount.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.amount.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label>{{ form.target_currencies.label }}:</label>
+                    <div style="margin-left: 10px;">
+                        {{ form.target_currencies }}
+                    </div>
+                    {% if form.target_currencies.help_text %}
+                        <p class="help">{{ form.target_currencies.help_text }}</p>
+                    {% endif %}
+                    {% if form.target_currencies.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.target_currencies.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </fieldset>
+        
+        <div class="submit-row">
+            <input type="submit" value="Convert" class="default">
+        </div>
+    </form>
+</div>
+
+{% if results %}
+<div style="max-width: 800px; margin: 30px 0;">
+    <h2>Conversion Results</h2>
+    <p>
+        <strong>Source:</strong> {{ amount }} {{ source_currency.code }} ({{ source_currency.name }})
+    </p>
+    
+    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+            <tr style="background-color: #79aec8; color: white;">
+                <th style="padding: 10px; text-align: left;">Target Currency</th>
+                <th style="padding: 10px; text-align: right;">Rate</th>
+                <th style="padding: 10px; text-align: right;">Converted Amount</th>
+                <th style="padding: 10px; text-align: center;">Date</th>
+                <th style="padding: 10px; text-align: center;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr style="{% cycle 'background-color: #f9f9f9;' '' %}">
+                <td style="padding: 10px; color: black;">
+                    {{ result.target_currency.code }} - {{ result.target_currency.name }}
+                </td>
+                {% if result.success %}
+                    <td style="padding: 10px; text-align: right; color: black;">{{ result.rate_value }}</td>
+                    <td style="padding: 10px; text-align: right; font-weight: bold; color: black;">
+                        {{ result.target_currency.symbol }}{{ result.converted_amount }}
+                    </td>
+                    <td style="padding: 10px; text-align: center; color: black;">{{ result.valuation_date }}</td>
+                    <td style="padding: 10px; text-align: center; color: green;">✓ Success</td>
+                {% else %}
+                    <td style="padding: 10px; text-align: right; color: black;">-</td>
+                    <td style="padding: 10px; text-align: right; color: black;">-</td>
+                    <td style="padding: 10px; text-align: center; color: black;">-</td>
+                    <td style="padding: 10px; text-align: center; color: red;">
+                        ✗ Error: {{ result.error }}
+                    </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% endblock %}

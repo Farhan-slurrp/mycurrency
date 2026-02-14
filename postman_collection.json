@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "mycurrency-api-collection",
+		"name": "MyCurrency API",
+		"description": "API collection for MyCurrency exchange rate platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Currencies",
+			"item": [
+				{
+					"name": "List Currencies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/currencies/",
+							"host": ["{{base_url}}"],
+							"path": ["currencies", ""]
+						},
+						"description": "Get list of all currencies"
+					}
+				},
+				{
+					"name": "List Active Currencies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/currencies/?is_active=true",
+							"host": ["{{base_url}}"],
+							"path": ["currencies", ""],
+							"query": [
+								{
+									"key": "is_active",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Get list of active currencies only"
+					}
+				},
+				{
+					"name": "Get Currency",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/currencies/EUR/",
+							"host": ["{{base_url}}"],
+							"path": ["currencies", "EUR", ""]
+						},
+						"description": "Get a specific currency by code"
+					}
+				},
+				{
+					"name": "Create Currency",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"JPY\",\n    \"name\": \"Japanese Yen\",\n    \"symbol\": \"¥\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/currencies/",
+							"host": ["{{base_url}}"],
+							"path": ["currencies", ""]
+						},
+						"description": "Create a new currency"
+					}
+				},
+				{
+					"name": "Update Currency",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"EUR\",\n    \"name\": \"European Euro\",\n    \"symbol\": \"€\",\n    \"is_active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/currencies/EUR/",
+							"host": ["{{base_url}}"],
+							"path": ["currencies", "EUR", ""]
+						},
+						"description": "Update an existing currency"
+					}
+				},
+				{
+					"name": "Delete Currency",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/currencies/JPY/",
+							"host": ["{{base_url}}"],
+							"path": ["currencies", "JPY", ""]
+						},
+						"description": "Delete a currency"
+					}
+				}
+			]
+		},
+		{
+			"name": "Exchange Rates",
+			"item": [
+				{
+					"name": "Get Rates for Period",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rates/?source_currency=EUR&date_from=2024-01-01&date_to=2024-01-31",
+							"host": ["{{base_url}}"],
+							"path": ["rates", ""],
+							"query": [
+								{
+									"key": "source_currency",
+									"value": "EUR",
+									"description": "Source currency code"
+								},
+								{
+									"key": "date_from",
+									"value": "2024-01-01",
+									"description": "Start date (YYYY-MM-DD)"
+								},
+								{
+									"key": "date_to",
+									"value": "2024-01-31",
+									"description": "End date (YYYY-MM-DD)"
+								}
+							]
+						},
+						"description": "Get exchange rates for a time period grouped by target currency"
+					}
+				},
+				{
+					"name": "Load Historical Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"source_currency\": \"EUR\",\n    \"exchanged_currency\": \"USD\",\n    \"start_date\": \"2024-01-01\",\n    \"end_date\": \"2024-01-31\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/rates/load-historical/",
+							"host": ["{{base_url}}"],
+							"path": ["rates", "load-historical", ""]
+						},
+						"description": "Trigger async loading of historical exchange rate data"
+					}
+				}
+			]
+		},
+		{
+			"name": "Currency Converter",
+			"item": [
+				{
+					"name": "Convert Amount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/convert/?source_currency=EUR&exchanged_currency=USD&amount=100",
+							"host": ["{{base_url}}"],
+							"path": ["convert", ""],
+							"query": [
+								{
+									"key": "source_currency",
+									"value": "EUR",
+									"description": "Source currency code"
+								},
+								{
+									"key": "exchanged_currency",
+									"value": "USD",
+									"description": "Target currency code"
+								},
+								{
+									"key": "amount",
+									"value": "100",
+									"description": "Amount to convert"
+								}
+							]
+						},
+						"description": "Convert an amount from one currency to another using the latest rate"
+					}
+				},
+				{
+					"name": "Convert EUR to GBP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/convert/?source_currency=EUR&exchanged_currency=GBP&amount=250.50",
+							"host": ["{{base_url}}"],
+							"path": ["convert", ""],
+							"query": [
+								{
+									"key": "source_currency",
+									"value": "EUR"
+								},
+								{
+									"key": "exchanged_currency",
+									"value": "GBP"
+								},
+								{
+									"key": "amount",
+									"value": "250.50"
+								}
+							]
+						},
+						"description": "Convert EUR to GBP"
+					}
+				},
+				{
+					"name": "Convert USD to CHF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/convert/?source_currency=USD&exchanged_currency=CHF&amount=1000",
+							"host": ["{{base_url}}"],
+							"path": ["convert", ""],
+							"query": [
+								{
+									"key": "source_currency",
+									"value": "USD"
+								},
+								{
+									"key": "exchanged_currency",
+									"value": "CHF"
+								},
+								{
+									"key": "amount",
+									"value": "1000"
+								}
+							]
+						},
+						"description": "Convert USD to CHF"
+					}
+				}
+			]
+		},
+		{
+			"name": "API Documentation",
+			"item": [
+				{
+					"name": "OpenAPI Schema",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/schema/",
+							"host": ["http://localhost:8000"],
+							"path": ["api", "schema", ""]
+						},
+						"description": "Get OpenAPI schema"
+					}
+				},
+				{
+					"name": "Swagger UI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/docs/",
+							"host": ["http://localhost:8000"],
+							"path": ["api", "docs", ""]
+						},
+						"description": "Swagger UI documentation"
+					}
+				}
+			]
+		}
+	]
+}
