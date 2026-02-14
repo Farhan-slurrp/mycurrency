@@ -1,6 +1,6 @@
 # MyCurrency - Currency Exchange Rate Platform
 
-A Django-based web platform for calculating currency exchange rates with support for multiple data providers.
+A Django-based web platform for calculating currency exchange rates.
 
 ## Supported Currencies
 
@@ -15,7 +15,7 @@ A Django-based web platform for calculating currency exchange rates with support
 - **Django**: 5.x
 - **Django REST Framework**: REST API
 - **Celery + Redis**: Async task processing
-- **PostgreSQL/SQLite**: Database
+- **SQLite**: Database
 - **httpx**: Async HTTP client
 - **drf-spectacular**: OpenAPI documentation
 
@@ -144,7 +144,7 @@ docker-compose down
 
 1. Register at https://currencybeacon.com/register
 2. Get your API key
-3. Add to `.env`: `CURRENCY_BEACON_API_KEY=your-api-key`
+3. Add to `.env`: `CURRENCY_BEACON_API_KEY=currencybeacon-api-key`
 4. Enable the CurrencyBeacon provider in Django Admin
 
 ## API Endpoints
