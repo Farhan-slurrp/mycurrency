@@ -12,7 +12,7 @@ A Django-based web platform for calculating currency exchange rates.
 ## Technology Stack
 
 - **Python**: 3.11+
-- **Django**: 5.x
+- **Django**: >=4.0,<=5.0
 - **Django REST Framework**: REST API
 - **Celery + Redis**: Async task processing
 - **SQLite**: Database
